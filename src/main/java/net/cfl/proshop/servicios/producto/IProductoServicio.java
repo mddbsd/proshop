@@ -3,14 +3,17 @@ package net.cfl.proshop.servicios.producto;
 import java.util.List;
 
 import net.cfl.proshop.modelo.Producto;
+import net.cfl.proshop.request.ActualizaProductoReq;
+import net.cfl.proshop.request.AgregaProductoReq;
 
 public interface IProductoServicio {
-	Producto agregaProducto(Producto producto);
+	//crud
+	Producto agregaProducto(AgregaProductoReq request);
 	Producto listaProductoPorId(Long id);
-	
 	void borrarProducto(Long id);
-	void actualizaProducto(Producto producto, Long id);
+	Producto actualizaProducto(ActualizaProductoReq request, Long id);
 	
+	//filtros
 	List<Producto> listarProductos();
 	List<Producto> listarPorCategoria(String categoria);
 	List<Producto> listarPorMarca(String marca);

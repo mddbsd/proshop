@@ -19,7 +19,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Producto {
 	@Id
@@ -37,5 +36,17 @@ public class Producto {
 	
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Imagen> imagenes;
+
+	public Producto(String nombre, String marca, String descripcion, BigDecimal precio, int stock,
+			Categoria categoria) {
+		super();
+		this.nombre = nombre;
+		this.marca = marca;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.stock = stock;
+		this.categoria = categoria;
+	}
+	
 	
 }
