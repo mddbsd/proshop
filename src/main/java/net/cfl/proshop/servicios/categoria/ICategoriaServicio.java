@@ -9,6 +9,6 @@ public interface ICategoriaServicio {
 	Categoria listaCategoriaPorNombre(String nombre);
 	List<Categoria> listarCategorias();
 	Categoria agregaCategoria(Categoria categoria);
-	Categoria actualizaCategoria(Categoria categoria);
+	Categoria actualizaCategoria(Categoria categoria, Long id);
 	void borrarCategoriaPorId(Long id);
 }
