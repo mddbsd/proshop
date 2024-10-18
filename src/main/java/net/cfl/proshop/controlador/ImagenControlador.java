@@ -9,9 +9,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 import net.cfl.proshop.dto.ImagenDto;
+import net.cfl.proshop.excepciones.RecursoNoEncontradoEx;
 import net.cfl.proshop.modelo.Imagen;
 import net.cfl.proshop.respuesta.ApiRespuesta;
 import net.cfl.proshop.servicios.imagen.IImagenServicio;
@@ -48,6 +52,37 @@ public class ImagenControlador {
 		return ResponseEntity.ok().contentType(MediaType.parseMediaType(imagen.getArchivoTipo()))
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + imagen.getArchivoNombre() + "\"")
 				.body(recurso);
+	}
+	@PutMapping("/imagen/{imagenId}/actualiza")
+	public ResponseEntity<ApiRespuesta> actualizaImagen(@PathVariable Long imagenId, @RequestBody MultipartFile archivo){
+		try {
+			Imagen imagen = imagenServicio.listaImagenPorId(imagenId);
+			if (imagen != null) {
+				imagenServicio.actualizaImagen(archivo, imagenId);
+				return ResponseEntity.ok(new ApiRespuesta("Imagen actualizada!", null));
+			}
+		} catch (RecursoNoEncontradoEx e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(new ApiRespuesta(e.getMessage(),null));
+		}
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+				.body(new ApiRespuesta("Fallo al actualizar imagen", null));
+	}
+	
+	@DeleteMapping("/imagen/{imagenId}/borrar")
+	public ResponseEntity<ApiRespuesta> borraImagen(@PathVariable Long imagenId){
+		try {
+			Imagen imagen = imagenServicio.listaImagenPorId(imagenId);
+			if (imagen != null) {
+				imagenServicio.borraImagenPorId(imagenId)
+				return ResponseEntity.ok(new ApiRespuesta("Imagen borrada!", null));
+			}
+		} catch (RecursoNoEncontradoEx e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(new ApiRespuesta(e.getMessage(),null));
+		}
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+				.body(new ApiRespuesta("Fallo al borrar imagen", null));
 	}
 }
 

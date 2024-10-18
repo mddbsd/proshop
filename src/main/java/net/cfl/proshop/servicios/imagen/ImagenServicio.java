@@ -31,7 +31,7 @@ public class ImagenServicio implements IImagenServicio {
 	}
 
 	@Override
-	public void boarraImagenPorId(Long id) {
+	public void borraImagenPorId(Long id) {
 		imagenRepositorio.findById(id).ifPresentOrElse(imagenRepositorio::delete, () -> {
 			throw new RecursoNoEncontradoEx("No ses encuentra la imagen con id " + id);
 		});

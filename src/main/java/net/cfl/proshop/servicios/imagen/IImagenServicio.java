@@ -9,7 +9,7 @@ import net.cfl.proshop.modelo.Imagen;
 
 public interface IImagenServicio {
 	Imagen listaImagenPorId(Long id);
-	void boarraImagenPorId(Long id);
+	void borraImagenPorId(Long id);
 	List<ImagenDto> guardaImagenes(List<MultipartFile> archivo, Long productoId);
 	void actualizaImagen(MultipartFile archivo, Long imagenId);
 }
