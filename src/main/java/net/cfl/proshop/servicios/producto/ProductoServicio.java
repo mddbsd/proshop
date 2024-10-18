@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import net.cfl.proshop.excepciones.ProductoNoEncontradoEx;
+import net.cfl.proshop.excepciones.RecursoNoEncontradoEx;
 import net.cfl.proshop.modelo.Categoria;
 import net.cfl.proshop.modelo.Producto;
 import net.cfl.proshop.repositorio.CategoriaRepositorio;
@@ -50,7 +51,7 @@ public class ProductoServicio implements IProductoServicio{
 	@Override
 	public Producto listaProductoPorId(Long id) {
 		return productoRepositorio.findById(id)
-				.orElseThrow(() -> new ProductoNoEncontradoEx("Producto no encontrado"));
+				.orElseThrow(() -> new RecursoNoEncontradoEx("Producto no encontrado"));
 	}
 
 	@Override
