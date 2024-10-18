@@ -74,7 +74,7 @@ public class ImagenControlador {
 		try {
 			Imagen imagen = imagenServicio.listaImagenPorId(imagenId);
 			if (imagen != null) {
-				imagenServicio.borraImagenPorId(imagenId)
+				imagenServicio.borraImagenPorId(imagenId);
 				return ResponseEntity.ok(new ApiRespuesta("Imagen borrada!", null));
 			}
 		} catch (RecursoNoEncontradoEx e) {
