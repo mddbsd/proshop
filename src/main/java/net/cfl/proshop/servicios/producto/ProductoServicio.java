@@ -28,7 +28,7 @@ public class ProductoServicio implements IProductoServicio{
 		// Si existe, la establecemos como categoria del producto
 		// Si no existe, la guardamso en la bdd 
 		// Y la establecemos como categoria del producto
-		Categoria categoria = Optional.ofNullable(categoriaRepositorio.findByAtCategoria(request.getCategoria().getNombre()))
+		Categoria categoria = Optional.ofNullable(categoriaRepositorio.findByNombre(request.getCategoria().getNombre()))
 				.orElseGet(() -> {
 					Categoria nuevaCategoria = new Categoria(request.getCategoria().getNombre());
 					return categoriaRepositorio.save(nuevaCategoria);
@@ -58,7 +58,7 @@ public class ProductoServicio implements IProductoServicio{
 	public void borrarProducto(Long id) {
 		productoRepositorio.findById(id)
 			.ifPresentOrElse(productoRepositorio::delete, 
-					() -> new ProductoNoEncontradoEx("Producto no encontrado"));
+					() -> new RecursoNoEncontradoEx("Producto no encontrado"));
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class ProductoServicio implements IProductoServicio{
 		return productoRepositorio.findById(productoId)
 				.map(productoExistente -> actualizaProductoExistente(productoExistente, request))
 				.map(productoRepositorio::save)
-				.orElseThrow(() -> new ProductoNoEncontradoEx("producto no encontrado"));
+				.orElseThrow(() -> new RecursoNoEncontradoEx("producto no encontrado"));
 	}
 	
 	public Producto actualizaProductoExistente(Producto productoExistente, ActualizaProductoReq request) {
@@ -75,7 +75,7 @@ public class ProductoServicio implements IProductoServicio{
 		productoExistente.setDescripcion(request.getDescripcion());
 		productoExistente.setPrecio(request.getPrecio());
 		productoExistente.setStock(request.getStock());
-		Categoria categoria = categoriaRepositorio.findByAtCategoria(request.getCategoria().getNombre());
+		Categoria categoria = categoriaRepositorio.findByNombre(request.getCategoria().getNombre());
 		productoExistente.setCategoria(categoria);
 		return productoExistente;
 	}
@@ -87,7 +87,7 @@ public class ProductoServicio implements IProductoServicio{
 
 	@Override
 	public List<Producto> listarPorCategoria(String categoria) {
-		return productoRepositorio.findByAtCategoria(categoria);
+		return productoRepositorio.findByCategoriaNombre(categoria);
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class ProductoServicio implements IProductoServicio{
 
 	@Override
 	public List<Producto> listarPorMarcaYCategoria(String marca, String categoria) {
-		return productoRepositorio.findByMarcaYAtCategoria(marca, categoria);
+		return productoRepositorio.findByMarcaAndCategoriaNombre(marca, categoria);
 	}
 
 	@Override
@@ -107,12 +107,12 @@ public class ProductoServicio implements IProductoServicio{
 
 	@Override
 	public List<Producto> listarPorNombreYMarca(String nombre, String marca) {
-		return productoRepositorio.findByNombreYMarca(nombre, marca);
+		return productoRepositorio.findByNombreAndMarca(nombre, marca);
 	}
 
 	@Override
 	public Long contarProductosPorNombreYMarca(String nombre, String marca) {
-		return productoRepositorio.countByNombreYMarca(nombre, marca);
+		return productoRepositorio.countByNombreAndMarca(nombre, marca);
 	}
 
 }
