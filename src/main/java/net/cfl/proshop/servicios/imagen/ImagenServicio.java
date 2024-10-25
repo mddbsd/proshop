@@ -50,7 +50,7 @@ public class ImagenServicio implements IImagenServicio {
 				imagen.setImagen(new SerialBlob(archivo.getBytes()));
 				imagen.setProducto(producto);
 				
-				String descargaUrl = "/api/v1/imagenes/imagen/descarga";
+				String descargaUrl = "/api/v1/imagenes/imagen/descarga/";
 				imagen.setDescargaUrl(descargaUrl + imagen.getId());
 				Imagen imagenGuardada = imagenRepositorio.save(imagen);
 				
@@ -58,8 +58,8 @@ public class ImagenServicio implements IImagenServicio {
 				imagenRepositorio.save(imagenGuardada);
 				
 				ImagenDto imagenDto = new ImagenDto();
-				imagenDto.setImagenId(imagenGuardada.getId());
-				imagenDto.setImagenNombre(imagenGuardada.getArchivoNombre());
+				imagenDto.setId(imagenGuardada.getId());
+				imagenDto.setArchivoNombre(imagenGuardada.getArchivoNombre());
 				imagenDto.setDescargaUrl(imagenGuardada.getDescargaUrl());
 				imagenesGuardadasDto.add(imagenDto);
 				

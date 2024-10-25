@@ -3,14 +3,19 @@ package net.cfl.proshop.servicios.producto;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import net.cfl.proshop.dto.ImagenDto;
+import net.cfl.proshop.dto.ProductoDto;
 import net.cfl.proshop.excepciones.ProductoNoEncontradoEx;
 import net.cfl.proshop.excepciones.RecursoNoEncontradoEx;
 import net.cfl.proshop.modelo.Categoria;
+import net.cfl.proshop.modelo.Imagen;
 import net.cfl.proshop.modelo.Producto;
 import net.cfl.proshop.repositorio.CategoriaRepositorio;
+import net.cfl.proshop.repositorio.ImagenRepositorio;
 import net.cfl.proshop.repositorio.ProductoRepositorio;
 import net.cfl.proshop.request.ActualizaProductoReq;
 import net.cfl.proshop.request.AgregaProductoReq;
@@ -21,6 +26,8 @@ public class ProductoServicio implements IProductoServicio{
 	
 	private final ProductoRepositorio productoRepositorio;
 	private final CategoriaRepositorio categoriaRepositorio;
+	private final ImagenRepositorio imagenRepositorio;
+	private final ModelMapper modelMapper;
 	
 	@Override
 	public Producto agregaProducto(AgregaProductoReq request) {
@@ -114,5 +121,43 @@ public class ProductoServicio implements IProductoServicio{
 	public Long contarProductosPorNombreYMarca(String nombre, String marca) {
 		return productoRepositorio.countByNombreAndMarca(nombre, marca);
 	}
+	
+	@Override
+	public List<ProductoDto> traeProductosConvertidos(List<Producto> productos){
+		
+		return productos.stream().map(this :: convertirAProductoDto).toList();
+	}
+	
+	@Override
+	public ProductoDto convertirAProductoDto(Producto producto) {
+		ProductoDto productoDto = modelMapper.map(producto, ProductoDto.class);
+		List<Imagen> imagenes = imagenRepositorio.findByProductoId(producto.getId());
+		List<ImagenDto> imagenesDto = imagenes
+				.stream()
+				.map(imagen -> modelMapper.map(imagenes, ImagenDto.class))
+				.toList();
+		productoDto.setImagenes(imagenesDto);
+		return productoDto;
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
