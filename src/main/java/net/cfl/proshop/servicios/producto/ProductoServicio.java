@@ -134,7 +134,8 @@ public class ProductoServicio implements IProductoServicio{
 		List<Imagen> imagenes = imagenRepositorio.findByProductoId(producto.getId());
 		List<ImagenDto> imagenesDto = imagenes
 				.stream()
-				.map(imagen -> modelMapper.map(imagenes, ImagenDto.class))
+				//el mapper esta usando el objeto imagenes, cuando deberia estar utilizando el parametro imagen
+				.map(imagen -> modelMapper.map(imagen, ImagenDto.class))
 				.toList();
 		productoDto.setImagenes(imagenesDto);
 		return productoDto;
