@@ -28,6 +28,29 @@ public class Carrito {
 	@OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<CarritoItem> carritoItems;
 	
+	public void agregaItem(CarritoItem item) {
+		this.carritoItems.add(item);
+		item.setCarrito(this);
+		actualizaCostoTotal();
+	}
+	
+	public void quitaItem(CarritoItem item) {
+		this.carritoItems.remove(item);
+		item.setCarrito(this);
+		actualizaCostoTotal();
+	}
+	
+	private void actualizaCostoTotal() {
+		this.costoTotal = carritoItems
+				.stream()
+				.map(item -> {
+					BigDecimal precioUnitario = item.getPrecioUni();
+					if (precioUnitario == null) {
+						return BigDecimal.ZERO;
+					}
+					return precioUnitario.multiply(BigDecimal.valueOf(item.getCantidad()));
+				}).reduce(BigDecimal.ZERO, BigDecimal :: add);
+	}
 }
 
 
