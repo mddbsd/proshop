@@ -43,7 +43,8 @@ public class CarritoControlador {
 		}
 	}
 	
-	public ResponseEntity<ApiRespuesta> calculaMontoTotal(Long carritoId){
+	@GetMapping("/{carritoId}/carrito/monto-total")
+	public ResponseEntity<ApiRespuesta> calculaMontoTotal(@PathVariable Long carritoId){
 		try {
 			BigDecimal montoTotal = carritoServicio.traePrecioTotal(carritoId);
 			return ResponseEntity.ok(new ApiRespuesta("Monto Total: ", montoTotal));
