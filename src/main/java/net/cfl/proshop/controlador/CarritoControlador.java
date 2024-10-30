@@ -23,6 +23,7 @@ import net.cfl.proshop.servicios.categoria.ICategoriaServicio;
 public class CarritoControlador {
 	private final ICarritoServicio carritoServicio;
 	
+	//Comentario de prueba
 	@GetMapping("/{carritoId}/mi-carrito")
 	public ResponseEntity<ApiRespuesta> traeCarrito (@PathVariable Long carritoId){
 		try {
