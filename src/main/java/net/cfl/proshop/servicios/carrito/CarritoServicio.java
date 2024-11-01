@@ -1,6 +1,7 @@
 package net.cfl.proshop.servicios.carrito;
 
 import java.math.BigDecimal;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import net.cfl.proshop.repositorio.CarritoRepositorio;
 public class CarritoServicio implements ICarritoServicio{
 	private final CarritoRepositorio carritoRepositorio;
 	private final CarritoItemRepositorio carritoItemRepositorio;
+	private final AtomicLong generadorId = new AtomicLong(0);
 	@Override
 	public Carrito traeCarrito(Long id) {
 		Carrito carrito = carritoRepositorio.findById(id)
@@ -38,6 +40,20 @@ public class CarritoServicio implements ICarritoServicio{
 		Carrito carrito = traeCarrito(id);
 		return carrito.getCostoTotal();
 	}
+	
+	/* Metodo utilizado para generar ids de carritos sin auth
+	 * del usuario, solo lo aplicamos para probra la api
+	 * en esta etapa donde todavia no implementamos
+	 * la gestion de usuarios
+	 * */
+	@Override
+	public Long inicializaCarrito() {
+		Carrito nuevoCarrito = new Carrito();
+		Long nuevoCarritoId = generadorId.incrementAndGet();
+		nuevoCarrito.setId(nuevoCarritoId);
+		return carritoRepositorio.save(nuevoCarrito).getId();
+	}
+	
 
 }
 

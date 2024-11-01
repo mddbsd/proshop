@@ -21,12 +21,16 @@ import net.cfl.proshop.servicios.carrito.ICarritoServicio;
 @RequestMapping("${api.prefix}/items-carrito")
 public class CarritoItemControlador {
 	private final ICarritoItemServicio carritoItemServicio;
+	private final ICarritoServicio carritoServicio;
 	
 	@PostMapping("/item/agrega")
-	public ResponseEntity<ApiRespuesta> agregaItemAlCarrito(@RequestParam Long carritoId,
+	public ResponseEntity<ApiRespuesta> agregaItemAlCarrito(@RequestParam(required = false) Long carritoId,
 															@RequestParam Long productoId, 
 															@RequestParam Integer cantidad){
 		try {
+			if (carritoId == null) {
+				carritoId = carritoServicio.inicializaCarrito();
+			}
 			carritoItemServicio.agregaItemAlCarrito(carritoId, productoId, cantidad);
 			return ResponseEntity.ok(new ApiRespuesta("item agregado con exito!", null));
 		} catch (RecursoNoEncontradoEx e) {

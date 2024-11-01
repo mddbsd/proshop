@@ -8,5 +8,6 @@ public interface ICarritoServicio {
 	Carrito traeCarrito(Long id);
 	void limpiaCarrito(Long id);
 	BigDecimal traePrecioTotal(Long id);
+	Long inicializaCarrito();
 	
 }
