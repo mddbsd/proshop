@@ -16,12 +16,14 @@ import net.cfl.proshop.modelo.Carrito;
 import net.cfl.proshop.respuesta.ApiRespuesta;
 import net.cfl.proshop.servicios.carrito.ICarritoServicio;
 import net.cfl.proshop.servicios.categoria.ICategoriaServicio;
+import net.cfl.proshop.servicios.producto.IProductoServicio;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("${api.prefix}/carritos")
 public class CarritoControlador {
 	private final ICarritoServicio carritoServicio;
+	private final IProductoServicio productoServicio;
 	
 	//Comentario de prueba
 	@GetMapping("/{carritoId}/mi-carrito")

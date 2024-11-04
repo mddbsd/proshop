@@ -69,7 +69,12 @@ public class CarritoItemServicio implements ICarritoItemServicio{
 				item.setPrecioUni(item.getProducto().getPrecio());
 				item.setPrecioTot();
 			});
-		BigDecimal montoTotal = carrito.getCostoTotal();
+		//Hace un mapeo de todos los items para calcular el monto total en vez de obtener el costo total sin calcualr
+		//BigDecimal montoTotal = carrito.getCostoTotal();
+		BigDecimal montoTotal = carrito.getCarritoItems()
+				.stream()
+				.map(CarritoItem :: getPrecioTot)
+				.reduce(BigDecimal.ZERO, BigDecimal :: add);
 		carrito.setCostoTotal(montoTotal);
 		carritoRepositorio.save(carrito);
 	}
