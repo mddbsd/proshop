@@ -1,32 +1,41 @@
 {
 	"nombre":"TV",
-	"marca":"Samgung",
-	"descipcion":"Smart 20 pulgadas",
-	"precio":"10000",
+	"marca":"SAMSUNG",
+	"descripcion":"Smart 20 pulgadas",
+	"precio":"100",
 	"stock":"20",
 	"categoria":"electronica"
 }
 {
 	"nombre":"TV",
 	"marca":"LG",
-	"descipcion":"Smart 40 pulgadas",
-	"precio":"100000",
+	"descripcion":"Smart 40 pulgadas",
+	"precio":"150",
 	"stock":"20",
 	"categoria":"electronica"
 }
 {
-	"nombre":"telefono",
-	"marca":"Samsung",
-	"descipcion":"20 gigas",
-	"precio":"104000",
+	"nombre":"TELEFONO",
+	"marca":"SAMSUNG",
+	"descripcion":"20 gigas",
+	"precio":"110",
 	"stock":"20",
 	"categoria":"comunicaciones"
 }
 {
-	"nombre":"telefono",
-	"marca":"Motorola",
-	"descipcion":"10 gigas",
-	"precio":"101000",
+	"nombre":"TELEFONO",
+	"marca":"MOTOROLA",
+	"descripcion":"10 gigas",
+	"precio":"120",
 	"stock":"20",
 	"categoria":"comunicaciones"
+}
+{
+	"nombre":"HELADERA",
+	"marca":"SAMSUNG",
+	"descripcion":"con freezer",
+	"precio":"400",
+	"stock":"20",
+	"categoria":"electrodomesticos"
+	
 }

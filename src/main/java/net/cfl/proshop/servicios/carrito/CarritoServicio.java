@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import net.cfl.proshop.excepciones.RecursoNoEncontradoEx;
@@ -27,6 +28,7 @@ public class CarritoServicio implements ICarritoServicio{
 		return carritoRepositorio.save(carrito);
 	}
 
+	@Transactional //Permite la ejecucion en bloque de las consultas SQL
 	@Override
 	public void limpiaCarrito(Long id) {
 		Carrito carrito = traeCarrito(id);		

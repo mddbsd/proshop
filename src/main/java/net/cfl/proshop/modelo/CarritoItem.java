@@ -3,6 +3,8 @@ package net.cfl.proshop.modelo;
 import java.math.BigDecimal;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +34,7 @@ public class CarritoItem {
 	@JoinColumn(name = "producto_id")
 	private Producto producto;
 	
+	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn (name = "carrito_id")
 	private Carrito carrito;
