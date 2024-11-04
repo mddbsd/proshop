@@ -39,7 +39,6 @@ public class Producto {
 
 	public Producto(String nombre, String marca, String descripcion, BigDecimal precio, int stock,
 			Categoria categoria) {
-		super();
 		this.nombre = nombre;
 		this.marca = marca;
 		this.descripcion = descripcion;

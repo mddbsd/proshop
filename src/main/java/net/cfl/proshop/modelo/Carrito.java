@@ -29,6 +29,11 @@ public class Carrito {
 	@OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<CarritoItem> carritoItems = new HashSet<>();
 	
+	
+	
+	
+	
+	
 	public void agregaItem(CarritoItem item) {
 		this.carritoItems.add(item);
 		item.setCarrito(this);
