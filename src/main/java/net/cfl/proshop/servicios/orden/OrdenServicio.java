@@ -2,10 +2,12 @@ package net.cfl.proshop.servicios.orden;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import net.cfl.proshop.enums.OrdenEstado;
 import net.cfl.proshop.excepciones.RecursoNoEncontradoEx;
@@ -15,16 +17,28 @@ import net.cfl.proshop.modelo.OrdenItem;
 import net.cfl.proshop.modelo.Producto;
 import net.cfl.proshop.repositorio.OrdenRepositorio;
 import net.cfl.proshop.repositorio.ProductoRepositorio;
+import net.cfl.proshop.servicios.carrito.CarritoServicio;
 
 @Service
 @RequiredArgsConstructor
 public class OrdenServicio implements IOrdenServicio{
 	private final OrdenRepositorio ordenRepositorio;
 	private final ProductoRepositorio productoRepositorio;
+	private final CarritoServicio carritoServicio;
+	
+	@Transactional
 	@Override
 	public Orden realizaOrden(Long usuarioId) {
-		// TODO Apéndice de método generado automáticamente
-		return null;
+		Carrito carrito = carritoServicio.traeCarritoPorUsuarioId(usuarioId);
+		Orden orden = crearOrden(carrito);
+		List<OrdenItem> listaDeItemsOrden =  crearOrdenItem(orden, carrito);
+		
+		orden.setOrdenItems(new HashSet<>(listaDeItemsOrden));
+		orden.setMontoTotal(calculaMontoTotal(listaDeItemsOrden));
+		Orden ordenGuardada = ordenRepositorio.save(orden);
+		carritoServicio.limpiaCarrito(carrito.getId());
+		
+		return ordenGuardada;
 	}
 	
 	
@@ -43,7 +57,7 @@ public class OrdenServicio implements IOrdenServicio{
 	
 	private Orden crearOrden(Carrito carrito) {
 		Orden orden = new Orden();
-		// Establecer el usuario
+		orden.setUsuario(carrito.getUsuario());
 		orden.setOrdenEstado(OrdenEstado.PENDIENTE);
 		orden.setOrdenFecha(LocalDate.now());
 		return orden;
@@ -59,23 +73,6 @@ public class OrdenServicio implements IOrdenServicio{
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	@Override
 	public Orden traeOrden(Long ordenId) {
@@ -83,5 +80,33 @@ public class OrdenServicio implements IOrdenServicio{
 				.orElseThrow(() -> new RecursoNoEncontradoEx("Orden No encontrada"));
 	}
 	
+	@Override
+	public List<Orden> traeUsuarioOrdenes(Long usuarioId){
+		return ordenRepositorio.findByUsuarioId(usuarioId);
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
