@@ -1,9 +1,12 @@
 package net.cfl.proshop.servicios.usuario;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import net.cfl.proshop.excepciones.RecursoNoEncontradoEx;
+import net.cfl.proshop.excepciones.UsuarioExisteEx;
 import net.cfl.proshop.modelo.Usuario;
 import net.cfl.proshop.repositorio.UsuarioRepositorio;
 import net.cfl.proshop.request.ActualizaUsuarioReq;
@@ -25,8 +28,16 @@ public class UsuarioServicio implements IUsuarioServicio{
 
 	@Override
 	public Usuario crearUsuario(AgregaUsuarioReq request) {
-		// TODO Apéndice de método generado automáticamente
-		return null;
+		return Optional.of(request)
+				.filter(usuario -> !usuarioRepositorio.existsByEmail(request.getEmail()))
+				.map(req -> {
+					Usuario usuario = new Usuario();
+					usuario.setEmail(request.getEmail());
+					usuario.setPwd(request.getPwd());
+					usuario.setUsuarioNombre(request.getUsuarioNombre());
+					usuario.setUsuarioApellido(request.getUsuarioApellido());
+					return usuarioRepositorio.save(usuario);
+				}).orElseThrow(() -> new UsuarioExisteEx("El usuario " + request.getEmail() + " ya existe"));
 	}
 
 	@Override

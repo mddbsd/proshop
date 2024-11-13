@@ -9,7 +9,7 @@ import net.cfl.proshop.modelo.Producto;
 public interface ProductoRepositorio extends JpaRepository<Producto, Long>{
 	List<Producto> findByCategoriaNombre(String categoriaNombre);
 	List<Producto> findByMarca(String marca);
-	List<Producto> findByMarcaAndCategoriaNombre(String marca, String CategoriaNombre);
+	List<Producto> findByMarcaAndCategoriaNombre(String marca, String categoriaNombre);
 	List<Producto> findByNombre(String nombre);
 	List<Producto> findByNombreAndMarca(String nombre, String marca);
 	Long countByNombreAndMarca(String nombre, String marca);
