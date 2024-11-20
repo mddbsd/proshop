@@ -37,5 +37,72 @@
 	"precio":"400",
 	"stock":"20",
 	"categoria":"electrodomesticos"
-	
 }
+{
+	"nombre":"ZAPATILLA",
+	"marca":"NIKE",
+	"descripcion":"deporiva",
+	"precio":"100",
+	"stock":"10",
+	"categoria":"indumentaria"
+}
+{
+	"nombre":"PANTALON",
+	"marca":"ADIDAS",
+	"descripcion":"Joggin deportivo",
+	"precio":"50",
+	"stock":"15",
+	"categoria":"indumentaria"
+}
+{
+	"nombre":"DETERGENTE",
+	"marca":"CIF",
+	"descripcion":"mata al 99,9% de las bacterias",
+	"precio":"15",
+	"stock":"100",
+	"categoria":"limpieza"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
